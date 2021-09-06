@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    rails_ext (1.0.0)
-      rails (>= 6.1)
+    rails_extend (1.0.0)
+      rails (>= 6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -156,7 +156,7 @@ DEPENDENCIES
   pg
   puma
   rails
-  rails_ext!
+  rails_extend!
   sdoc
 
 BUNDLED WITH

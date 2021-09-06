@@ -17,5 +17,4 @@ module RailsExtend::ActiveModel
   end
 end
 
-#ActiveSupport.on_load :active_record do
 ActiveModel::Type::Value.prepend RailsExtend::ActiveModel::TypeValue
