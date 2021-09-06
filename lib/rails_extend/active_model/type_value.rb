@@ -17,4 +17,4 @@ module RailsExtend::ActiveModel
   end
 end
 
-ActiveModel::Type::Value.prepend RailsExtend::ActiveModel::TypeValue
+#ActiveModel::Type::Value.prepend RailsExtend::ActiveModel::TypeValue
