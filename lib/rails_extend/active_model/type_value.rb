@@ -1,4 +1,4 @@
-require 'active_model/type/value'
+# frozen_string_literal: true
 
 module RailsExtend::ActiveModel
   module TypeValue
@@ -17,4 +17,5 @@ module RailsExtend::ActiveModel
   end
 end
 
-#ActiveModel::Type::Value.prepend RailsExtend::ActiveModel::TypeValue
+#ActiveSupport.on_load :active_record do
+ActiveModel::Type::Value.prepend RailsExtend::ActiveModel::TypeValue

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RailsCom::ActiveRecord
+module RailsExtend::ActiveRecord
   module Extend
 
     def human_name
