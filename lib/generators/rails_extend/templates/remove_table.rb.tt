@@ -1,0 +1,9 @@
+class <%= migration_class_name %> < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version %>]
+
+  def change
+  <%- tables.each do |table| -%>
+    drop_table :<%= table %>
+  <%- end -%>
+  end
+
+end
