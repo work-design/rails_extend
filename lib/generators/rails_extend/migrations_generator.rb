@@ -13,7 +13,7 @@ class RailsExtend::MigrationsGenerator < Rails::Generators::Base
     RailsExtend::Models.database_tables_hash.each do |db, tables|
       next if tables.blank?
       @tables = tables
-      path = db.migrations_paths || db_migrate_path
+      path = Array(db)[0]
       migration_template 'migration.rb', File.join(path, "#{file_name}.rb")
     end
   end

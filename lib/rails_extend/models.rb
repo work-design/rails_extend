@@ -11,7 +11,7 @@ module RailsExtend::Models
   def database_tables_hash
     result = {}
 
-    models.group_by(&:connection_db_config).each do |db_name, record_classes|
+    models.group_by(&->(i) { i.connection.migrations_paths }).each do |db_name, record_classes|
       result[db_name] = migrate_tables_hash(record_classes)
     end
 
