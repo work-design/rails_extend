@@ -69,6 +69,10 @@ module RailsExtend::Models
     tables - models.map(&:table_name) - ['schema_migrations', 'ar_internal_metadata']
   end
 
+  def ignore_models
+    models.group_by(&->(i){ i.attributes_to_define_after_schema_loads.size }).transform_values!(&->(i) { i.map(&:to_s) })
+  end
+
   def tables
     ActiveRecord::Base.connection.tables
   end

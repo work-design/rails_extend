@@ -1,0 +1,10 @@
+RailsExtend.configure do |config|
+  config.ignore_models = [
+  <%- ignore_models.each do |count, models| -%>
+    # 已定义 <%= count %> 个 attribute
+  <%- models.each do |model| -%>
+    '<%= model %>',
+  <%- end -%>
+  <%- end -%>
+  ]
+end
