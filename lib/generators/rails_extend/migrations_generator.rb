@@ -10,10 +10,10 @@ class RailsExtend::MigrationsGenerator < Rails::Generators::Base
   def create_migration_file
     file_name = "rails_com_migration_#{file_index}"
 
-    RailsExtend::Models.database_tables_hash.each do |db, tables|
+    RailsExtend::Models.db_tables_hash.each do |mig_paths, tables|
       next if tables.blank?
       @tables = tables
-      path = Array(db)[0]
+      path = Array(mig_paths)[0]
       migration_template 'migration.rb', File.join(path, "#{file_name}.rb")
     end
   end
