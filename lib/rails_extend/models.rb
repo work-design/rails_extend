@@ -28,8 +28,8 @@ module RailsExtend::Models
       r[:add_references] ||= {}
       r[:remove_attributes] ||= {}
       record_classes.each do |record_class|
-        next if RailsExtend.config.ignore_models.include?(record_class.name)
-        r[:models] << record_class.name
+        next if RailsExtend.config.ignore_models.include?(record_class.to_s)
+        r[:models] << record_class.to_s
         r[:table_exists] = r[:table_exists] || record_class.table_exists?
         r[:add_attributes].merge! record_class.migrate_attributes_by_model.except(*record_class.migrate_attributes_by_db.keys)
         r[:add_references].merge! record_class.references_by_model.except(*record_class.migrate_attributes_by_db.keys)
