@@ -5,11 +5,11 @@ module RailsExtend
       attr_reader :ignore_models
 
       def copy_initializer_file
-        puts '===================='
+        puts "#{'*-' * 40}"
         Models.ignore_models.each do |count, models|
           puts "#{count.to_s.rjust(2, ' ')}: #{models.inspect}"
         end
-        puts '===================='
+        puts "#{'*-' * 40}"
 
         limit = args[0].to_i
         @ignore_models = Models.ignore_models.select(&->(k, v){ k <= limit })
