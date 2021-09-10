@@ -4,7 +4,7 @@ module RailsExtend::ActiveRecord
   module Enum
 
     def options_i18n(attribute)
-      h = I18n.t enum_key(attribute), default: {}
+      h = ::I18n.t enum_key(attribute), default: {}
       h.compact!
 
       if h.is_a?(Hash) && h.present?
@@ -25,11 +25,11 @@ module RailsExtend::ActiveRecord
     def help_i18n(attribute)
       return nil if attribute.blank?
       help_key = RailsExtend.config.help_key.call(self, attribute)
-      I18n.t help_key, default: nil
+      ::I18n.t help_key, default: nil
     end
 
     def enum_i18n(attribute, value)
-      h = I18n.t enum_key(attribute), default: {}
+      h = ::I18n.t enum_key(attribute), default: {}
       h.compact!
 
       v = nil
