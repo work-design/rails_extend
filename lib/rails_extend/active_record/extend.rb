@@ -5,6 +5,16 @@ module RailsExtend::ActiveRecord
       model_name.human
     end
 
+    def subclasses_tree(tree = {}, node = self)
+      tree[node] ||= {}
+
+      node.subclasses.each do |subclass|
+        tree[node].merge! subclasses_tree(tree[node], subclass)
+      end
+
+      tree
+    end
+
     def to_fixture
       require 'rails/generators/test_unit/model/model_generator'
 
@@ -14,7 +24,7 @@ module RailsExtend::ActiveRecord
       cols = columns.reject(&->(i){ attributes_by_default.include?(i.name) }).map { |col| "#{col.name}:#{col.type}" }
 
       generator = TestUnit::Generators::ModelGenerator.new(args + cols, destination_root: Rails.root, fixture: true)
-      generator.instance_variable_set :@source_paths, Array(RailsCom::Engine.root.join('lib/templates', 'test_unit/model'))
+      generator.instance_variable_set :@source_paths, Array(RailsExtend::Engine.root.join('lib/templates', 'test_unit/model'))
       generator.invoke_all
     end
 

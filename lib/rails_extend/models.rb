@@ -1,11 +1,18 @@
 module RailsExtend::Models
   extend self
 
-  def models
+  def models_hash
+    return @models_hash if defined? @models_hash
     Zeitwerk::Loader.eager_load_all
-    result = ActiveRecord::Base.descendants
-    result.reject!(&:abstract_class?)
-    result
+    @models_hash = ActiveRecord::Base.subclasses_tree
+  end
+
+  def models
+    return @models if defined? @models
+    Zeitwerk::Loader.eager_load_all
+    @models = ActiveRecord::Base.descendants
+    @models.reject!(&:abstract_class?)
+    @models
   end
 
   def db_tables_hash
@@ -33,10 +40,11 @@ module RailsExtend::Models
         r[:table_exists] = r[:table_exists] || record_class.table_exists?
         r[:add_attributes].merge! record_class.migrate_attributes_by_model.except(*record_class.migrate_attributes_by_db.keys)
         r[:add_references].merge! record_class.references_by_model.except(*record_class.migrate_attributes_by_db.keys)
-        r[:remove_attributes].merge! record_class.migrate_attributes_by_db.except!(*record_class.migrate_attributes_by_model.keys, *record_class.attributes_by_belongs.keys, *record_class.attributes_by_default)
         r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
         r[:indexes] = record_class.indexes_by_model
       end
+      r[:remove_attributes].merge! record_class.migrate_attributes_by_db.except!(*record_class.migrate_attributes_by_model.keys, *record_class.attributes_by_belongs.keys, *record_class.attributes_by_default)
+
 
       @tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
     end
