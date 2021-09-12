@@ -8,7 +8,7 @@ class RailsExtend::MigrationsGenerator < Rails::Generators::Base
   attr_reader :tables
 
   def create_migration_file
-    file_name = "rails_com_migration_#{file_index}"
+    file_name = "extend_migration_#{file_index}"
 
     RailsExtend::Models.db_tables_hash.each do |mig_paths, tables|
       next if tables.blank?
@@ -20,10 +20,10 @@ class RailsExtend::MigrationsGenerator < Rails::Generators::Base
 
   def file_index
     ups = ActiveRecord::Base.connection.migration_context.migrations_status.select do |status, version, name|
-      status == 'up' && name.start_with?('Rails com migration ')
+      status == 'up' && name.start_with?('Extend migration ')
     end
     if ups.present?
-      index = ups[-1][-1].delete_prefix 'Rails com migration '
+      index = ups[-1][-1].delete_prefix 'Extend migration '
       index.to_i + 1
     else
       1
