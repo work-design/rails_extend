@@ -25,43 +25,52 @@ module RailsExtend::Models
     result
   end
 
-  def migrate_tables_hash(root = ActiveRecord::Base, records_hash = models_hash)
+  def tables_hash(root = ActiveRecord::Base, records_hash = models_hash)
     @tables ||= {}
 
-    records_hash[root].each do |node, children|
+    records_hash[root].each_key do |node|
+      next if RailsExtend.config.ignore_models.include?(node.to_s)
       unless node.abstract_class?
       # records.group_by(&:table_name).each do |table_name, record_classes|
-      # next if RailsExtend.config.ignore_models.include?(record_class.to_s)
+
         @tables[node.table_name] ||= {}
         r = @tables[node.table_name]
         r[:models] ||= []
-        r[:models] << node.to_s
+        r[:models] << node
 
         r[:table_exists] = r[:table_exists] || node.table_exists?
 
-        r[:add_attributes] ||= {}
-        r[:add_attributes].reverse_merge! node.migrate_attributes_by_model
+        r[:model_attributes] ||= {}
+        r[:model_attributes].reverse_merge! node.migrate_attributes_by_model
 
-        r[:add_references] ||= {}
-        r[:add_references].reverse_merge! node.references_by_model
+        r[:model_references] ||= {}
+        r[:model_references].reverse_merge! node.references_by_model
 
         r[:indexes] ||= []
         r[:indexes] += node.indexes_by_model
       end
 
-      migrate_tables_hash(node, records_hash[root])
+      tables_hash(node, records_hash[root])
     end
 
     @tables
   end
 
-  def xx
-    r[:remove_attributes] ||= {}
+  def migrate_tables_hash
+    tables = {}
 
-    r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
-    @tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
+    tables_hash.each do |table_name, cols|
+      db = cols['models'][0].migrate_attributes_by_db
 
-    r[:remove_attributes].merge! record_class.migrate_attributes_by_db.except!(*record_class.migrate_attributes_by_model.keys, *record_class.attributes_by_belongs.keys, *record_class.attributes_by_default)
+      r[:add_attributes] = cols[:model_attributes].except! db.keys
+      r[:add_references] = cols[:model_references].except! db.keys
+      r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
+      r[:remove_attributes] = db.except!(*r[:model_attributes].keys, *record_class.attributes_by_belongs.keys, *record_class.attributes_by_default)
+
+      tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
+    end
+
+    tables
   end
 
   def migrate_modules_hash
