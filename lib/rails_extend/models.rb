@@ -1,10 +1,10 @@
 module RailsExtend::Models
   extend self
 
-  def models_hash
+  def models_hash(root = ActiveRecord::Base)
     return @models_hash if defined? @models_hash
     Zeitwerk::Loader.eager_load_all
-    @models_hash = ActiveRecord::Base.subclasses_tree
+    @models_hash = root.subclasses_tree
   end
 
   def models
@@ -25,31 +25,43 @@ module RailsExtend::Models
     result
   end
 
-  def migrate_tables_hash(records = models)
-    @tables = {}
+  def migrate_tables_hash(root = ActiveRecord::Base, records_hash = models_hash)
+    @tables ||= {}
 
-    records.group_by(&:table_name).each do |table_name, record_classes|
-      r = @tables[table_name] || {}
-      r[:models] ||= []
-      r[:add_attributes] ||= {}
-      r[:add_references] ||= {}
-      r[:remove_attributes] ||= {}
-      record_classes.each do |record_class|
-        next if RailsExtend.config.ignore_models.include?(record_class.to_s)
-        r[:models] << record_class.to_s
-        r[:table_exists] = r[:table_exists] || record_class.table_exists?
-        r[:add_attributes].merge! record_class.migrate_attributes_by_model.except(*record_class.migrate_attributes_by_db.keys)
-        r[:add_references].merge! record_class.references_by_model.except(*record_class.migrate_attributes_by_db.keys)
-        r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
-        r[:indexes] = record_class.indexes_by_model
+    records_hash[root].each do |node, children|
+      unless node.abstract_class?
+      # records.group_by(&:table_name).each do |table_name, record_classes|
+      # next if RailsExtend.config.ignore_models.include?(record_class.to_s)
+        @tables[node.table_name] ||= {}
+        r = @tables[node.table_name]
+        r[:models] ||= []
+        r[:models] << node.to_s
+
+        r[:table_exists] = r[:table_exists] || node.table_exists?
+
+        r[:add_attributes] ||= {}
+        r[:add_attributes].reverse_merge! node.migrate_attributes_by_model
+
+        r[:add_references] ||= {}
+        r[:add_references].reverse_merge! node.references_by_model
+
+        r[:indexes] ||= []
+        r[:indexes] += node.indexes_by_model
       end
-      r[:remove_attributes].merge! record_class.migrate_attributes_by_db.except!(*record_class.migrate_attributes_by_model.keys, *record_class.attributes_by_belongs.keys, *record_class.attributes_by_default)
 
-
-      @tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
+      migrate_tables_hash(node, records_hash[root])
     end
 
     @tables
+  end
+
+  def xx
+    r[:remove_attributes] ||= {}
+
+    r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
+    @tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
+
+    r[:remove_attributes].merge! record_class.migrate_attributes_by_db.except!(*record_class.migrate_attributes_by_model.keys, *record_class.attributes_by_belongs.keys, *record_class.attributes_by_default)
   end
 
   def migrate_modules_hash
