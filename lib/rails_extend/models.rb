@@ -30,9 +30,8 @@ module RailsExtend::Models
 
     records_hash[root].each_key do |node|
       next if RailsExtend.config.ignore_models.include?(node.to_s)
-      unless node.abstract_class?
-      # records.group_by(&:table_name).each do |table_name, record_classes|
 
+      unless node.abstract_class?
         @tables[node.table_name] ||= {}
         r = @tables[node.table_name]
         r[:models] ||= []
@@ -68,12 +67,11 @@ module RailsExtend::Models
     tables_hash.each do |table_name, cols|
       db = cols[:models][0].migrate_attributes_by_db
 
-      r = {}
+      r = cols.slice(:indexes, :table_exists)
       r[:add_attributes] = cols[:model_attributes].except *db.keys
       r[:add_references] = cols[:model_references].except *db.keys
       r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
       r[:remove_attributes] = db.except(*cols[:model_attributes].keys, *cols[:belongs_attributes].keys, *cols[:model_defaults])
-      r[:indexes] = cols[:indexes]
 
       tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
     end
