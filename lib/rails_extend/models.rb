@@ -19,7 +19,7 @@ module RailsExtend::Models
     result = {}
 
     models.group_by(&->(i) { i.connection.migrations_paths }).each do |migrations_paths, record_classes|
-      result[migrations_paths] = migrate_tables_hash(record_classes)
+      result[migrations_paths] = migrate_tables_hash
     end
 
     result
