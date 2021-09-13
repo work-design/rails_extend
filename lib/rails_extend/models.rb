@@ -50,7 +50,7 @@ module RailsExtend::Models
         r[:indexes] += node.indexes_by_model
 
         r[:model_defaults] ||= []
-        r[:model_defaults] += node.attributes_by_default
+        r[:model_defaults] |= node.attributes_by_default
 
         r[:belongs_attributes] ||= {}
         r[:belongs_attributes].reverse_merge! node.attributes_by_belongs
@@ -69,10 +69,10 @@ module RailsExtend::Models
       db = cols[:models][0].migrate_attributes_by_db
 
       r = {}
-      r[:add_attributes] = cols[:model_attributes].except! db.keys
-      r[:add_references] = cols[:model_references].except! db.keys
+      r[:add_attributes] = cols[:model_attributes].except *db.keys
+      r[:add_references] = cols[:model_references].except *db.keys
       r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
-      r[:remove_attributes] = db.except!(*cols[:model_attributes].keys, *cols[:belongs_attributes].keys, *cols[:model_defaults])
+      r[:remove_attributes] = db.except(*cols[:model_attributes].keys, *cols[:belongs_attributes].keys, *cols[:model_defaults])
 
       tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
     end
