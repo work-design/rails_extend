@@ -47,7 +47,7 @@ module RailsExtend::Models
         r[:model_references].reverse_merge! node.references_by_model
 
         r[:indexes] ||= []
-        r[:indexes] += node.indexes_by_model
+        r[:indexes] |= node.indexes_by_model
 
         r[:model_defaults] ||= []
         r[:model_defaults] |= node.attributes_by_default
@@ -73,6 +73,7 @@ module RailsExtend::Models
       r[:add_references] = cols[:model_references].except *db.keys
       r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
       r[:remove_attributes] = db.except(*cols[:model_attributes].keys, *cols[:belongs_attributes].keys, *cols[:model_defaults])
+      r[:indexes] = cols[:indexes]
 
       tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
     end
