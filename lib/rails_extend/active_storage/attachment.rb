@@ -12,5 +12,5 @@ module RailsExtend::ActiveStorage
 end
 
 ActiveSupport.on_load(:active_storage_blob) do
-  ActiveStorage::VariantRecord.include RailsExtend::ActiveStorage::Attachment
+  ActiveStorage::Attachment.include RailsExtend::ActiveStorage::Attachment
 end
