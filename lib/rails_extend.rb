@@ -15,3 +15,5 @@ require 'rails_extend/generators'
 require 'rails_extend/routes'
 require 'rails_extend/models'
 require 'rails_extend/env'
+
+require 'rails_extend/quiet_logs'
