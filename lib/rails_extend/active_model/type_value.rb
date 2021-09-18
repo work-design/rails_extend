@@ -14,6 +14,13 @@ module RailsExtend::ActiveModel
       type
     end
 
+    def migrate_type
+      return type if type
+      if respond_to? :subtype
+        subtype.type
+      end
+    end
+
   end
 end
 

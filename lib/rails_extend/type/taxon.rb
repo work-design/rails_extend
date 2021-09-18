@@ -5,6 +5,10 @@ module ActiveRecord::Type
       :taxon
     end
 
+    def migrate_type
+      :json
+    end
+
   end
 end
 

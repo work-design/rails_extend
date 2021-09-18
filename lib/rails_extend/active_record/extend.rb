@@ -63,14 +63,11 @@ module RailsExtend::ActiveRecord
           r.merge! raw_type: r[:type] # 兼容 rails 7 以下
         end
 
-        if r[:type].respond_to? :subtype
-          case r[:type].class.name
-          when 'ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Array'
-            r.merge! array: true
-          when 'ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Range'
-            r.merge! range: true
-            r.merge! raw_type: r[:type].subtype.type
-          end
+        case r[:type].class.name
+        when 'ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Array'
+          r.merge! array: true
+        when 'ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Range'
+          r.merge! range: true
         end
 
         if r[:type].respond_to?(:options) && r[:type].options.present?
@@ -96,6 +93,10 @@ module RailsExtend::ActiveRecord
         r.merge! column
         r.merge! migrate_type: column[:raw_type]
         r.symbolize_keys!
+
+        if r[:type].respond_to? :migrate_type
+          r.merge! migrate_type: r[:type].migrate_type
+        end
 
         if r[:default].respond_to?(:call)
           r.delete(:default)

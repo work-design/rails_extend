@@ -13,6 +13,10 @@ module ActiveRecord::Type
       end
     end
 
+    def migrate_type
+      :json
+    end
+
   end
 end
 
