@@ -16,9 +16,8 @@ module RailsExtend::ActiveModel
 
     def migrate_type
       return type if type
-      if respond_to? :subtype
-        subtype.type
-      end
+      return subtype.type if respond_to?(:subtype) && subtype.type
+      :string
     end
 
   end

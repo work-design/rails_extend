@@ -58,7 +58,7 @@ module RailsExtend::ActiveRecord
         end
 
         if r[:type].respond_to?(:type)
-          r.merge! raw_type: r[:type].type || :string
+          r.merge! raw_type: r[:type].type
         else
           r.merge! raw_type: r[:type] # 兼容 rails 7 以下
         end
