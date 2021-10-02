@@ -29,7 +29,7 @@ module RailsExtend::ActiveRecord
     end
 
     def com_column_names
-      column_names - attributes_by_default
+      column_names - attributes_by_default + attachment_reflections.keys
     end
 
     def column_attributes
