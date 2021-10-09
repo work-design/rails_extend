@@ -1,0 +1,139 @@
+zh:
+  date:
+    formats:
+      default: '%Y-%m-%d'
+      short: '%b %d'
+      long: '%B %d, %Y'
+    day_names: [星期天, 星期一, 星期二, 星期三, 星期四, 星期五, 星期六]
+    abbr_day_names: [周日, 周一, 周二, 周三, 周四, 周五, 周六]
+    month_names: [~, 一月份, 二月份, 三月份, 四月份, 五月份, 六月份, 七月份, 八月份, 九月份, 十月份, 十一月, 十二月]
+    abbr_month_names: [~, 一月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 十一月, 十二月]
+    week_day:
+      monday:
+        name: 星期一
+        abbr: 周一
+      tuesday:
+        name: 星期二
+        abbr: 周二
+      wednesday:
+        name: 星期三
+        abbr: 周三
+      thursday:
+        name: 星期四
+        abbr: 周四
+      friday:
+        name: 星期五
+        abbr: 周五
+      saturday:
+        name: 星期六
+        abbr: 周六
+      sunday:
+        name: 星期日
+        abbr: 周日
+    month_day:
+      january:
+        name: 一月份
+        abbr: 一月
+      february:
+        name: 二月份
+        abbr: 二月
+      march:
+        name: 三月份
+        abbr: 三月
+      april:
+        name: 四月份
+        abbr: 四月
+      may:
+        name: 五月份
+        abbr: 五月
+      june:
+        name: 六月份
+        abbr: 六月
+      july:
+        name: 七月份
+        abbr: 七月
+      august:
+        name: 八月份
+        abbr: 八月
+      september:
+        name: 九月份
+        abbr: 九月
+      october:
+        name: 十月份
+        abbr: 十月
+      november:
+        name: 十一月份
+        abbr: 十一月
+      december:
+        name: 十二月份
+        abbr: 十二月
+    order:
+      - 年
+      - 月
+      - 天
+  time:
+    formats:
+      default: '%a, %d %b %Y %H:%M:%S %z'
+      short: '%d %b %H:%M'
+      long: '%B %d, %Y %H:%M'
+    am: 上午
+    pm: 下午
+  datetime:
+    distance_in_words:
+      half_a_minute: 半分钟
+      less_than_x_seconds:
+        one: 不到1秒
+        other: '不到%{count}秒'
+      x_seconds:
+        one: 1秒
+        other: '%{count}秒'
+      less_than_x_minutes:
+        one: 不到1分钟
+        other: '不到%{count}分钟'
+      x_minutes:
+        one: 1分钟
+        other: '%{count}分钟'
+      about_x_hours:
+        one: 1小时
+        other: '%{count}小时'
+      x_days:
+        one: 1天
+        other: '%{count}天'
+      about_x_months:
+        one: 1个月
+        other: '%{count}个月'
+      x_months:
+        one: 1个月
+        other: '%{count} months'
+      about_x_years:
+        one: 1年
+        other: '%{count} years'
+      over_x_years:
+        one: '超过1年'
+        other: '%{count} 年'
+      almost_x_years:
+        one:  'almost 1 year'
+        other: 'almost %{count} years'
+    prompts:
+      year: 年
+      month: 月
+      day: 日
+      hour: 小时
+      minute: 分钟
+      second: 秒
+  durations:
+    years: 年
+    months: 个月
+    weeks: 个周
+    days: 天
+    hours: 小时
+    minutes: 分钟
+    seconds: 秒
+  duration:
+    years: 年
+    months: 月
+    weeks: 周
+    days: 天
+    hours: 小时
+    minutes: 分钟
+    seconds: 秒

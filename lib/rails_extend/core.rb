@@ -12,3 +12,6 @@ require 'rails_extend/core/module'
 
 # Ruby Strand Library extensions
 require 'rails_extend/core/pathname'
+
+# Rails
+require 'rails_extend/core/duration'
