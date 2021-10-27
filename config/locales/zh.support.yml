@@ -15,14 +15,14 @@ zh:
         format: "%n %u"
         units:
           byte:
-            one:   "Byte"
-            other: "Bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
-          pb: "PB"
-          eb: "EB"
+            one: 字节
+            other: 字节
+          kb: KB
+          mb: MB
+          gb: GB
+          tb: TB
+          pb: PB
+          eb: EB
       # Used in NumberHelper.number_to_human()
       decimal_units:
         format: "%n %u"

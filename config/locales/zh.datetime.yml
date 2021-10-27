@@ -71,6 +71,12 @@ zh:
       - 年
       - 月
       - 天
+    distance_in_words:
+      zero: 今天
+      one: 明天
+      two: 后天
+      three: 大后天
+      other: '%{count} 天后'
   time:
     formats:
       default: '%a, %d %b %Y %H:%M:%S %z'
