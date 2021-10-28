@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Time::DATE_FORMATS[:datetime] = '%Y-%m-%d %H:%M'
+Time::DATE_FORMATS[:local] = '%Y-%m-%dT%H:%M:%S.%L'
 Time::DATE_FORMATS[:week] = ->(time) {
   I18n.t('date.day_names')[time.wday]
 }
