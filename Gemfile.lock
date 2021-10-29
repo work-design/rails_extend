@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_extend (1.0.0)
+    rails_extend (1.0.1)
       rails (>= 5.0)
 
 GEM
