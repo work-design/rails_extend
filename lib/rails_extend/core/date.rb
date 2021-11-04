@@ -29,4 +29,8 @@ class Date
     }
   end
 
+  def inspect
+    to_s
+  end
+
 end
