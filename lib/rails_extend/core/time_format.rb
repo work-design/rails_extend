@@ -12,9 +12,11 @@ Time::DATE_FORMATS[:date] = ->(time) {
 Time::DATE_FORMATS[:month] = ->(time) {
   I18n.t('date.month_names')[time.month]
 }
+
 Date::DATE_FORMATS[:week] = ->(date) {
   I18n.t('date.day_names')[date.wday]
 }
 Date::DATE_FORMATS[:month] = ->(date) {
   I18n.t('date.month_names')[date.month]
 }
+Date::DATE_FORMATS[:month_and_day] = '%m-%d'
