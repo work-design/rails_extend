@@ -6,7 +6,7 @@ module RailsExtend::ActionController
     def _prefixes
       _action_name = (request&.params || {})['action']
       if defined?(current_organ) && current_organ&.code.present?
-        ["#{current_organ.code}/#{controller_path}", "#{controller_path}/_#{_action_name}"] + super
+        ["#{current_organ.code}/#{controller_path}", current_organ.code, "#{controller_path}/_#{_action_name}"] + super
       else
         ["#{controller_path}/_#{_action_name}"] + super
       end
