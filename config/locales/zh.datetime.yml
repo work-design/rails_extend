@@ -75,7 +75,6 @@ zh:
       zero: 今天
       one: 明天
       two: 后天
-      three: 大后天
       other: '%{count} 天后'
   time:
     formats:
