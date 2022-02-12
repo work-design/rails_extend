@@ -5,7 +5,7 @@ module RailsExtend::ActiveRecord
 
     def options_i18n(attribute)
       h = ::I18n.t enum_key(attribute), default: {}
-      h.compact!
+      h = h.compact
 
       if h.is_a?(Hash) && h.present?
         return h.invert
