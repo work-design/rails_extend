@@ -9,6 +9,7 @@ require 'rails_extend/action_controller'
 require 'rails_extend/active_model'
 require 'rails_extend/active_record'
 require 'rails_extend/active_storage'
+require 'rails_extend/active_support'
 require 'rails_extend/type'  # 支持的 attribute type 扩展
 require 'rails_extend/generators'
 
