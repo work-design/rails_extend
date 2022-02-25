@@ -109,6 +109,16 @@ module RailsExtend::Models
     models.group_by(&->(i){ i.attributes_to_define_after_schema_loads.size }).transform_values!(&->(i) { i.map(&:to_s) })
   end
 
+  def attachments
+    @attachments = {}
+    models.each do |model|
+      attaches = model.attachment_reflections.transform_values(&:macro)
+      @attachments.merge! model.name => attaches if attaches.present?
+    end
+
+    @attachments
+  end
+
   def tables
     ActiveRecord::Base.connection.tables
   end
