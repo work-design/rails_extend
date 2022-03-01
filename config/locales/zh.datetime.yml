@@ -122,10 +122,10 @@ zh:
     prompts:
       year: 年
       month: 月
-      day: ' 天 '
-      hour: ' 时 '
-      minute: ' 分 '
-      second: ' 秒'
+      day: 天
+      hour: 时
+      minute: 分
+      second: 秒
   durations:
     years: 年
     months: 个月
