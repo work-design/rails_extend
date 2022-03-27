@@ -7,9 +7,9 @@ module RailsExtend::ActionController
       _action_name = (request&.params || {})['action']
 
       if self.class.superclass.action_methods.include?(_action_name)
-        pres = ["#{controller_path}/_#{_action_name}", "#{self.class.superclass.controller_path}/_#{_action_name}"] + super
+        pres = ["#{controller_path}/_#{_action_name}", "#{controller_path}/_base", "#{self.class.superclass.controller_path}/_#{_action_name}", "#{self.class.superclass.controller_path}/_base"] + super
       else
-        pres = ["#{controller_path}/_#{_action_name}"] + super
+        pres = ["#{controller_path}/_#{_action_name}", "#{controller_path}/_base"] + super
       end
 
       if defined?(current_organ) && current_organ&.code.present?
