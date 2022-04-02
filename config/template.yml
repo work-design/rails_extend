@@ -1,0 +1,8 @@
+default: &default
+  entry_paths: []
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  <<: *default

@@ -19,3 +19,4 @@ require 'rails_extend/models'
 require 'rails_extend/env'
 
 require 'rails_extend/quiet_logs'
+require 'rails_extend/exporter'
