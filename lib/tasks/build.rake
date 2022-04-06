@@ -1,7 +1,7 @@
 namespace :css do
   desc 'Build your CSS bundle'
   task :build do
-    system 'bin/sass', exception: true
+    system 'yarn install && yarn build:css', exception: true
   end
 end
 
