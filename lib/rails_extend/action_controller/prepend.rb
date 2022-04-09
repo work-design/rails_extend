@@ -13,7 +13,7 @@ module RailsExtend::ActionController
       end
 
       if defined?(current_organ) && current_organ&.code.present?
-        pres = ["#{current_organ.code}/views/#{controller_path}", "#{current_organ.code}/views"] + pres
+        pres = ["#{current_organ.code}/views/#{controller_path}"] + pres
       end
 
       pres
