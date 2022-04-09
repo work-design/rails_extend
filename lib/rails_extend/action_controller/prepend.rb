@@ -13,7 +13,11 @@ module RailsExtend::ActionController
       end
 
       if defined?(current_organ) && current_organ&.code.present?
-        pres = ["#{current_organ.code}/views/#{controller_path}"] + pres
+        RailsExtend.config.override_prefixes.each do |pre|
+          index = pres.index(pre)
+          pres.insert(index, "#{current_organ.code}/views/#{pre}") if index
+        end
+        pres.prepend "#{current_organ.code}/views/#{controller_path}"
       end
 
       pres
