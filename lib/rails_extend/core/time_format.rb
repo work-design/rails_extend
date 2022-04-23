@@ -2,6 +2,8 @@
 
 Time::DATE_FORMATS[:datetime] = '%Y-%m-%d %H:%M'
 Time::DATE_FORMATS[:local] = '%Y-%m-%dT%H:%M:%S'
+Time::DATE_FORMATS[:hour] = '%H'
+Time::DATE_FORMATS[:minute] = '%M'
 Time::DATE_FORMATS[:week] = ->(time) {
   I18n.t('date.day_names')[time.wday]
 }
