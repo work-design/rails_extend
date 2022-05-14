@@ -55,7 +55,9 @@ module RailsExtend::Models
         r[:belongs_attributes].reverse_merge! node.attributes_by_belongs
 
         if r[:model_attributes][node.primary_key]
-          r[:primary_type] = r[:model_attributes].dig(node.primary_key, :migrate_type)
+          r[:primary_type] = r[:model_attributes].delete(node.primary_key)[:migrate_type]
+        else
+          r[:primary_type] = :primary_key
         end
       end
 
@@ -71,13 +73,13 @@ module RailsExtend::Models
     tables_hash.each do |table_name, cols|
       db = cols[:models][0].migrate_attributes_by_db
 
-      r = cols.slice(:indexes, :table_exists)
+      r = cols.slice(:indexes, :table_exists, :primary_type)
       r[:add_attributes] = cols[:model_attributes].except *db.keys
       r[:add_references] = cols[:model_references].except *db.keys
       r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
       r[:remove_attributes] = db.except(*cols[:model_attributes].keys, *cols[:belongs_attributes].keys, *cols[:model_defaults])
 
-      tables[table_name] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
+      tables[table_name.to_sym] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
     end
 
     tables

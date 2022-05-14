@@ -123,7 +123,7 @@ module RailsExtend::ActiveRecord
 
         r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :range, :size, :default, :comment).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
 
-        cols.merge! name => r
+        cols.merge! name.to_sym => r
       end
 
       cols
@@ -143,7 +143,7 @@ module RailsExtend::ActiveRecord
         r.symbolize_keys!
         r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :size, :default, :comment).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
 
-        cols.merge! name => r
+        cols.merge! name.to_sym => r
       end
 
       cols
@@ -151,7 +151,7 @@ module RailsExtend::ActiveRecord
 
     def attributes_by_default
       if table_exists?
-        [primary_key] + all_timestamp_attributes_in_model
+        [primary_key.to_sym] + all_timestamp_attributes_in_model.map(&:to_sym)
       else
         []
       end
@@ -161,10 +161,10 @@ module RailsExtend::ActiveRecord
       results = {}
 
       reflections.values.select(&->(reflection){ reflection.belongs_to? }).each do |reflection|
-        results.merge! reflection.foreign_key => {
+        results.merge! reflection.foreign_key.to_sym => {
           input_type: :integer  # todo 考虑 foreign_key 不是自增 ID 的场景
         }
-        results.merge! reflection.foreign_type => { input_type: :string } if reflection.foreign_type
+        results.merge! reflection.foreign_type.to_sym => { input_type: :string } if reflection.foreign_type
       end
       results.except! *attributes_by_model.keys.map(&:to_s)
 
@@ -179,7 +179,7 @@ module RailsExtend::ActiveRecord
         r = { name: ref.name }
         r.merge! polymorphic: true if ref.polymorphic?
         r.merge! reference_options: r.slice(:polymorphic).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
-        results[ref.foreign_key] = r unless results.key?(ref.foreign_key.to_sym)
+        results[ref.foreign_key.to_sym] = r unless results.key?(ref.foreign_key.to_sym)
       end
 
       results
