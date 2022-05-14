@@ -54,8 +54,8 @@ module RailsExtend::Models
         r[:belongs_attributes] ||= {}
         r[:belongs_attributes].reverse_merge! node.attributes_by_belongs
 
-        if r[:model_attributes][node.primary_key]
-          table_options = { id: r[:model_attributes].delete(node.primary_key)[:migrate_type] }
+        if r[:model_attributes][node.primary_key.to_sym]
+          table_options = { id: r[:model_attributes].delete(node.primary_key.to_sym)[:migrate_type] }
           r[:table_options] = table_options.inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
         end
       end
