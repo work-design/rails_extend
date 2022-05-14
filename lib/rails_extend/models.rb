@@ -35,7 +35,7 @@ module RailsExtend::Models
         @tables[node.table_name] ||= {}
         r = @tables[node.table_name]
         r[:models] ||= []
-        r[:models] << node
+        r[:models] << node unless r[:models].include?(node)
 
         r[:table_exists] = r[:table_exists] || node.table_exists?
 
@@ -53,6 +53,10 @@ module RailsExtend::Models
 
         r[:belongs_attributes] ||= {}
         r[:belongs_attributes].reverse_merge! node.attributes_by_belongs
+
+        if r[:model_attributes][node.primary_key]
+          r[:primary_type] = r[:model_attributes].dig(node.primary_key, :migrate_type)
+        end
       end
 
       tables_hash(node, records_hash[root])
