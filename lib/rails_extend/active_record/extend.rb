@@ -175,6 +175,7 @@ module RailsExtend::ActiveRecord
       results = {}
       refs = reflections.values.select(&->(reflection){ reflection.belongs_to? })
       refs.reject! { |reflection| reflection.foreign_key.to_s != "#{reflection.name}_id" }
+      refs.reject! { |reflection| attributes_to_define_after_schema_loads.key?(reflection.foreign_key) }
       refs.each do |ref|
         r = { name: ref.name }
         r.merge! polymorphic: true if ref.polymorphic?
