@@ -75,7 +75,7 @@ module RailsExtend::Models
       r = cols.slice(:indexes, :table_exists, :table_options)
       r[:add_attributes] = cols[:model_attributes].except *db.keys
       r[:add_references] = cols[:model_references].except *db.keys
-      r[:timestamps] = ['created_at', 'updated_at'] & r[:add_attributes].keys
+      r[:timestamps] = [:created_at, :updated_at] & r[:add_attributes].keys
       r[:remove_attributes] = db.except(*cols[:model_attributes].keys, *cols[:belongs_attributes].keys, *cols[:model_defaults])
 
       tables[table_name.to_sym] = r unless r[:add_attributes].blank? && r[:add_references].blank? && r[:remove_attributes].blank?
