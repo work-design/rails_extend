@@ -15,6 +15,11 @@ module RailsExtend::ActionController
       end
       pres = pres + super
 
+      unless params['namespace'] && pres.include?(params['namespace'])
+        r = pres.find_index(&->(i){ i.exclude?('/') })
+        pres.insert(r, params[:namespace]) if r
+      end
+
       if defined?(current_organ) && current_organ&.code.present?
         RailsExtend.config.override_prefixes.each do |pre|
           index = pres.index(pre)
