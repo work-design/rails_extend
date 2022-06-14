@@ -15,7 +15,7 @@ module RailsExtend::ActionController
       end
       pres = pres + super
 
-      unless params['namespace'] && pres.include?(params['namespace'])
+      if params['namespace'] && pres.exclude?(params['namespace'])
         r = pres.find_index(&->(i){ i.exclude?('/') })
         pres.insert(r, params[:namespace]) if r
       end
