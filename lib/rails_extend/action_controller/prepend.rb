@@ -2,7 +2,7 @@ module RailsExtend::ActionController
   module Prepend
 
     private
-    # 支持在views/:controller 目录下，用 _action 开头的子目录进一步分组，会优先查找该目录下文件
+    # 支持在 views/:controller 目录下以 _:action 开头的子目录进一步分组，会优先查找该目录下文件
     def _prefixes
       _action_name = (request&.params || {})['action']
       pres = ["#{controller_path}/_#{_action_name}", "#{controller_path}/_base"]
