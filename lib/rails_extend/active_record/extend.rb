@@ -29,7 +29,12 @@ module RailsExtend::ActiveRecord
     end
 
     def com_column_names
-      column_names - attributes_by_default + attachment_reflections.keys
+      column_names - attributes_by_default + attachment_reflections.select(&->(_, i){ i.macro == :has_one_attached }).keys
+    end
+
+    def com_column_hash
+      attaches = attachment_reflections.select(&->(_, i){ i.macro == :has_many_attached })
+      attaches.transform_values!(&->(_){ [] })
     end
 
     def column_attributes
