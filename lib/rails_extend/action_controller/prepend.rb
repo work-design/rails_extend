@@ -13,7 +13,14 @@ module RailsExtend::ActionController
         pres = pres + ["#{super_class.controller_path}/_#{params['action']}", "#{super_class.controller_path}/_base"]
         super_class = super_class.superclass
       end
-      pres = pres + super
+      # 可以在 controller 中定义 _prefixes 方法
+      # super do |pres|
+      #   pres + ['xx']
+      # end
+      if block_given?
+        pres = yield pres
+      end
+      pres += super
 
       if params['namespace'] && pres.exclude?(params['namespace'])
         r = pres.find_index(&->(i){ i.exclude?('/') })
