@@ -5,6 +5,7 @@ gemspec
 gem 'rails'
 gem 'puma'
 gem 'pg'
+gem 'propshaft'
 
 gem 'amazing_print'
 
