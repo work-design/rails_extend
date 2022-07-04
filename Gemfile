@@ -7,6 +7,9 @@ gem 'puma'
 gem 'pg'
 gem 'propshaft'
 
+# for run dummy
+gem 'rails_com', github: 'work-design/rails_com'
+
 gem 'amazing_print'
 
 group :development, :test do
