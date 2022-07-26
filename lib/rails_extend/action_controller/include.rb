@@ -6,11 +6,11 @@ module RailsExtend::ActionController
       return false unless callback
 
       _if = callback.instance_variable_get(:@if).map do |c|
-        c.call(self)
+        c.match?(self)
       end
 
       _unless = callback.instance_variable_get(:@unless).map do |c|
-        !c.call(self)
+        !c.match?(self)
       end
 
       !(_if + _unless).uniq.include?(false)
