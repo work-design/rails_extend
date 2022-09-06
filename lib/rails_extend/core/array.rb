@@ -76,4 +76,12 @@ class Array
     (self - other).empty? && (other - self).empty?
   end
 
+  # 查找 index, by id
+  def find_until(base = 0, limit)
+    each_with_index do |i, index|
+      base += i[1]
+      break self[0..index] if base >= limit
+    end
+  end
+
 end
