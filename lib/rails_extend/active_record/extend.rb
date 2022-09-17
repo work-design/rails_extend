@@ -126,6 +126,7 @@ module RailsExtend::ActiveRecord
           r.delete(:default)
         end
 
+        # 这里不同步 default 这个选项，这样可以监测 changes
         r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :range, :size, :comment).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
 
         cols.merge! name.to_sym => r
