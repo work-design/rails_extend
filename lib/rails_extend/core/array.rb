@@ -86,7 +86,7 @@ class Array
 
   # [1, 2, 3]
   # => ['1', '1/2', '1/2/3']
-  def reverse_ancestors(sep = '/')
+  def ancestors(sep = '/')
     return [] if empty?
     r = [self[0].to_s]
 
@@ -99,7 +99,7 @@ class Array
 
   # [1, 2, 3]
   # => ['1', '2/1', '3/2/1']
-  def ancestors(sep = '/')
+  def reverse_ancestors(sep = '/')
     return [] if empty?
     r = [self[0].to_s]
 
