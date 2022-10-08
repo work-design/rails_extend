@@ -84,4 +84,30 @@ class Array
     end
   end
 
+  # [1, 2, 3]
+  # => ['1', '1/2', '1/2/3']
+  def reverse_ancestors(sep = '/')
+    return [] if empty?
+    r = [self[0].to_s]
+
+    self[1..].each do |i|
+      r << [r[-1], i].join(sep)
+    end
+
+    r
+  end
+
+  # [1, 2, 3]
+  # => ['1', '2/1', '3/2/1']
+  def ancestors(sep = '/')
+    return [] if empty?
+    r = [self[0].to_s]
+
+    self[1..].each do |i|
+      r << [i, r[-1]].join(sep)
+    end
+
+    r
+  end
+
 end
