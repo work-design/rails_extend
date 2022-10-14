@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+Time::DATE_FORMATS[:human] = '%Y-%m-%d %H:%M:%S'
 Time::DATE_FORMATS[:datetime] = '%Y-%m-%d %H:%M'
 Time::DATE_FORMATS[:local] = '%Y-%m-%dT%H:%M:%S'
 Time::DATE_FORMATS[:hour] = '%H'
