@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/work-design/rails_com.git
-  revision: 4a62531a28acc35a71bc9fad26c84414fbdbba25
+  revision: a75e324b0a57a7e4d0a7029a11d40c068f763939
   specs:
     rails_com (1.3.0)
       acme-client
@@ -220,7 +220,7 @@ GEM
     strscan (3.0.3)
     thor (1.2.1)
     timeout (0.3.0)
-    turbo-rails (1.3.0)
+    turbo-rails (1.3.1)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
