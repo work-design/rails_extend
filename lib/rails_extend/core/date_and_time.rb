@@ -1,15 +1,17 @@
 module RailsExtend
   module DateAndTime
 
+    # 用于 change 方法
     def parts
       arr = to_a
       {
-        seconds: arr[0],
-        minutes: arr[1],
-        hours: arr[2],
-        days: arr[3],
-        months: arr[4],
-        years: arr[5]
+        sec: arr[0],
+        min: arr[1],
+        hour: arr[2],
+        day: arr[3],
+        month: arr[4],
+        year: arr[5],
+        offset: arr[-1]
       }
     end
 
