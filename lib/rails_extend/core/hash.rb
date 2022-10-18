@@ -107,9 +107,11 @@ class Hash
   def difference(other)
     r1 = to_a.difference(other.to_a).to_h
     r2 = other.to_a.difference(to_a).to_h
+
     r1.each do |k, v|
       r1[k] = [v, r2[k]]
     end
+
     r1
   end
 
