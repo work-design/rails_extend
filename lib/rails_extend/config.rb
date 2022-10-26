@@ -12,6 +12,7 @@ module RailsExtend #:nodoc:
     config.override_prefixes = ['application']
     config.quiet_logs = [
       '/rails/active_storage',
+      '/wechat/js',
       '/images',
       '/@fs'
     ]
