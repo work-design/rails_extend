@@ -1,8 +1,8 @@
 module RailsExtend::ActionController
   module Extend
 
-    # if whether_filter(:require_login)
-    #   skip_before_action :require_login
+    # if whether_filter(:require_user)
+    #   skip_before_action :require_user
     # end
     def whether_filter(filter)
       self.get_callbacks(:process_action).map(&:filter).include?(filter.to_sym)
