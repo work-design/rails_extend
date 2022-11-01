@@ -30,7 +30,7 @@ module RailsExtend::ActiveRecord
 
     def enum_i18n(attribute, value)
       h = ::I18n.t enum_key(attribute), default: {}
-      h.compact!
+      h = h.compact # 注意这里返回的结果是 frozen Hash, 避免使用 compact!
       v = nil
 
       if h.is_a?(Hash)
