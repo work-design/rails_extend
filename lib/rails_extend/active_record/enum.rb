@@ -30,9 +30,9 @@ module RailsExtend::ActiveRecord
 
     def enum_i18n(attribute, value)
       h = ::I18n.t enum_key(attribute), default: {}
-      h = h.compact
-
+      h.compact!
       v = nil
+
       if h.is_a?(Hash)
         v = h[value] ? h[value] : h[value.to_s.to_sym]
       end
