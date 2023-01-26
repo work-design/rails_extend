@@ -4,8 +4,7 @@ module RailsExtend::ActiveRecord
   module Enum
 
     def options_i18n(attribute)
-      h = ::I18n.t enum_key(attribute), default: {}
-      h = h.compact
+      h = enum_base_i18n(attribute)
 
       if h.is_a?(Hash) && h.present?
         return h.invert
@@ -28,9 +27,13 @@ module RailsExtend::ActiveRecord
       ::I18n.t help_key, default: nil
     end
 
-    def enum_i18n(attribute, value)
+    def enum_base_i18n(attribute)
       h = ::I18n.t enum_key(attribute), default: {}
-      h = h.compact # 注意这里返回的结果是 frozen Hash, 避免使用 compact!
+      h.compact  # 注意这里返回的结果是 frozen Hash, 避免使用 compact!
+    end
+
+    def enum_i18n(attribute, value)
+      h = enum_base_i18n(attribute)
       v = nil
 
       if h.is_a?(Hash)
