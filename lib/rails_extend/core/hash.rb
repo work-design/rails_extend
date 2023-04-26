@@ -115,4 +115,8 @@ class Hash
     r1
   end
 
+  def limit(size)
+    slice(*keys[0...size])
+  end
+
 end
