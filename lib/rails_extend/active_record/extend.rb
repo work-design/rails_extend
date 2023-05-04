@@ -56,27 +56,27 @@ module RailsExtend::ActiveRecord
 
       attributes_to_define_after_schema_loads.each do |name, column|
         r = {}
-        r.merge! type: column[0]
+        r.merge! original_type: column[0]
 
-        if r[:type].respond_to? :call
-          r.merge! type: r[:type].call(ActiveModel::Type::String.new)
+        if r[:original_type].respond_to? :call
+          r.merge! original_type: r[:original_type].call(ActiveModel::Type::String.new)
         end
 
-        if r[:type].respond_to?(:type)
-          r.merge! raw_type: r[:type].type
+        if r[:original_type].respond_to?(:type)
+          r.merge! raw_type: r[:original_type].type
         else
-          r.merge! raw_type: r[:type] # 兼容 rails 7 以下
+          r.merge! raw_type: r[:original_type] # 兼容 rails 7 以下
         end
 
-        case r[:type].class.name
+        case r[:original_type].class.name
         when 'ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Array'
           r.merge! array: true
         when 'ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Range'
           r.merge! range: true
         end
 
-        if r[:type].respond_to?(:options) && r[:type].options.present?
-          r.merge! r[:type].options
+        if r[:original_type].respond_to?(:options) && r[:original_type].options.present?
+          r.merge! r[:original_type].options
         end
 
         if Rails::VERSION::MAJOR >= 7 && !column[1].instance_of?(Object) # Rails 7, column[1] 为默认值
@@ -97,10 +97,15 @@ module RailsExtend::ActiveRecord
         r = {}
         r.merge! column
         r.symbolize_keys!
-        r.merge! migrate_type: column[:raw_type]
 
-        if r[:type].respond_to? :migrate_type
-          r.merge! migrate_type: r[:type].migrate_type
+        if column[:virtual]
+          r.merge! migrate_type: :virtual, type: r[:original_type], stored: true
+        else
+          r.merge! migrate_type: column[:raw_type]
+        end
+
+        if r[:original_type].respond_to? :migrate_type
+          r.merge! migrate_type: r[:original_type].migrate_type
         end
 
         if r[:default].respond_to?(:call)
@@ -127,7 +132,7 @@ module RailsExtend::ActiveRecord
         end
 
         # 这里不同步 default 这个选项，这样可以监测 changes
-        r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :range, :size, :comment, :as).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
+        r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :range, :size, :comment, :as, :stored).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
 
         cols.merge! name.to_sym => r
       end
@@ -140,14 +145,14 @@ module RailsExtend::ActiveRecord
       cols = {}
 
       columns_hash.each do |name, column|
-        r = { type: column.type }
-        r.merge! migrate_type: r[:type]
+        r = { original_type: column.type }
+        r.merge! migrate_type: r[:original_type]
         r.merge! null: column.null unless column.null
         r.merge! default: column.default unless column.default.nil?
         r.merge! comment: column.comment if column.comment.present?
         r.merge! column.sql_type_metadata.instance_values.slice('limit', 'precision', 'scale').compact
         r.symbolize_keys!
-        r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :size, :default, :comment).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
+        r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :size, :default, :comment, :stored).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
 
         cols.merge! name.to_sym => r
       end
