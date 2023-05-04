@@ -96,8 +96,8 @@ module RailsExtend::ActiveRecord
       attributes_by_model.each do |name, column|
         r = {}
         r.merge! column
-        r.merge! migrate_type: column[:raw_type]
         r.symbolize_keys!
+        r.merge! migrate_type: column[:raw_type]
 
         if r[:type].respond_to? :migrate_type
           r.merge! migrate_type: r[:type].migrate_type
