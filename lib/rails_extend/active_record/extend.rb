@@ -97,15 +97,14 @@ module RailsExtend::ActiveRecord
         r = {}
         r.merge! column
         r.symbolize_keys!
-
-        if column[:virtual]
-          r.merge! migrate_type: :virtual, type: r[:original_type], stored: true
-        else
-          r.merge! migrate_type: column[:raw_type]
-        end
+        r.merge! migrate_type: column[:raw_type]
 
         if r[:original_type].respond_to? :migrate_type
           r.merge! migrate_type: r[:original_type].migrate_type
+        end
+
+        if r[:virtual]
+          r.merge! migrate_type: :virtual, type: r[:migrate_type], stored: true
         end
 
         if r[:default].respond_to?(:call)
@@ -132,7 +131,7 @@ module RailsExtend::ActiveRecord
         end
 
         # 这里不同步 default 这个选项，这样可以监测 changes
-        r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :range, :size, :comment, :as, :stored).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
+        r.merge! attribute_options: r.slice(:limit, :precision, :scale, :null, :index, :array, :range, :size, :comment, :type, :as, :stored).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
 
         cols.merge! name.to_sym => r
       end
