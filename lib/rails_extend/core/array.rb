@@ -110,19 +110,4 @@ class Array
     r
   end
 
-  def split_with(value = nil, &block)
-    arr = dup
-    result = []
-    x = []
-    if block_given?
-      idx = arr.index(&block)
-      while idx
-        result << x + arr.shift(idx)
-        x = arr.shift(1)
-        idx = arr.index(&block)
-      end
-    end
-    result << x + arr
-  end
-
 end
