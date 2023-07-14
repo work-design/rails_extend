@@ -5,6 +5,10 @@ module RailsExtend::ActiveRecord
       model_name.human
     end
 
+    def reset_pk_sequence!
+      connection.reset_pk_sequence!(table_name)
+    end
+
     def subclasses_tree(tree = {}, node = self)
       tree[node] ||= {}
 

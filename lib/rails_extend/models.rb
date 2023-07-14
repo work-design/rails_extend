@@ -15,6 +15,10 @@ module RailsExtend::Models
     @models
   end
 
+  def reset_pk_sequence!
+
+  end
+
   def db_tables_hash
     result = {}
 
