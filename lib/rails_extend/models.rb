@@ -16,7 +16,9 @@ module RailsExtend::Models
   end
 
   def reset_pk_sequence!
-
+    models.map do |i|
+      i.reset_pk_sequence!
+    end
   end
 
   def db_tables_hash
