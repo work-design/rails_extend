@@ -15,6 +15,9 @@ Time::DATE_FORMATS[:date] = ->(time) {
 Time::DATE_FORMATS[:month] = ->(time) {
   I18n.t('date.month_names')[time.month]
 }
+Time::DATE_FORMATS[:wechat] = ->(time) {
+  '%Y年%-m月%-d日 %H:%M'
+}
 
 Date::DATE_FORMATS[:month_and_day] = '%m-%d'
 Date::DATE_FORMATS[:week] = ->(date) {
