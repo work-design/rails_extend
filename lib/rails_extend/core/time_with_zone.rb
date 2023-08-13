@@ -5,7 +5,7 @@ module ActiveSupport
     include RailsExtend::DateAndTime
 
     def inspect
-      to_s
+      to_fs
     end
 
   end
