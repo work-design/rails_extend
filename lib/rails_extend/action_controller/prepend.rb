@@ -9,7 +9,7 @@ module RailsExtend::ActionController
 
       super_class = self.class.superclass
       # 同名 controller, 向上级追溯
-      while super_class.name.demodulize == self.class.name.demodulize && super_class.action_methods.include?(params['action'])
+      while super_class.action_methods.include?(params['action'])
         pres = pres + ["#{super_class.controller_path}/_#{params['action']}", "#{super_class.controller_path}/_base"]
         super_class = super_class.superclass
       end
