@@ -3,6 +3,15 @@
 module RailsExtend::Routes
   extend self
 
+  def find_actions(controller_path)
+    r = controllers[controller_path]
+    if r.is_a?(Hash)
+      r.keys
+    else
+      []
+    end
+  end
+
   def verbs(controller, action)
     routes_wrapper.select { |i| i[:controller] == controller.to_s && i[:action] == action.to_s }.map { |i| i[:verb] }.uniq
   end

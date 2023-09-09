@@ -9,7 +9,7 @@ module RailsExtend::ActionController
 
       super_class = self.class.superclass
       # 同名 controller, 向上级追溯
-      while !super_class.abstract? && super_class.action_methods.include?(params['action'])
+      while RailsExtend::Routes.find_actions(super_class.controller_path).include?(params['action'])
         pres = pres + ["#{super_class.controller_path}/_#{params['action']}", "#{super_class.controller_path}/_base"]
         super_class = super_class.superclass
       end
