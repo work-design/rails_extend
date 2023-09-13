@@ -20,7 +20,7 @@ module RailsExtend
     end
 
     def screen_width
-      Reline.get_screen_size.last - 2
+      Reline.get_screen_size.last
     rescue Errno::EINVAL # in `winsize': Invalid argument - <STDIN>
       79
     end
