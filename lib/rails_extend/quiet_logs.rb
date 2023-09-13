@@ -13,7 +13,7 @@ module RailsExtend
         Rails.logger.silence { @app.call(env) }
       else
         unless Rails.env.development?
-          Rails.logger.debug "\e[33m #{'-' * screen_width} \e[0m"
+          Rails.logger.debug "\e[33m #{'-' * screen_width} #{Reline.get_screen_size} \e[0m"
         end
         @app.call(env)
       end
