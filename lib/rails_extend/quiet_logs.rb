@@ -12,10 +12,16 @@ module RailsExtend
         Rails.logger.silence { @app.call(env) }
       else
         unless Rails.env.development?
-          Rails.logger.debug "\e[33m #{'- ~ ' * 40}- \e[0m"
+          Rails.logger.debug "\e[33m #{'-' * screen_width} \e[0m"
         end
         @app.call(env)
       end
+    end
+
+    def screen_width
+      Reline.get_screen_size.last - 2
+    rescue Errno::EINVAL # in `winsize': Invalid argument - <STDIN>
+      79
     end
 
   end
