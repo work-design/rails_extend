@@ -1,4 +1,3 @@
-require 'reline'
 module RailsExtend
   class QuietLogs
 
@@ -13,7 +12,7 @@ module RailsExtend
         Rails.logger.silence { @app.call(env) }
       else
         unless Rails.env.development?
-          Rails.logger.debug "\n\n"
+          Rails.logger.debug "\n"
         end
         @app.call(env)
       end
