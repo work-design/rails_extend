@@ -1,3 +1,4 @@
+require 'reline'
 module RailsExtend
   class QuietLogs
 
