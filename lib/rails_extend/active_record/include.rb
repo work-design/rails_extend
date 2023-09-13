@@ -20,11 +20,11 @@ module RailsExtend::ActiveRecord
         if defined?(@attributes) && @attributes
           attr_names = self.class.attribute_names.select { |name| _has_attribute?(name) }
           max_indent = attr_names.map(&:length).max
-          pp.seplist(attr_names, proc { pp.text "," }) do |attr_name|
-            pp.breakable " "
+          pp.seplist(attr_names, proc { pp.text ',' }) do |attr_name|
+            pp.breakable ' '
             pp.group(1) do
               pp.text attr_name.rjust(max_indent)
-              pp.text ":"
+              pp.text ':'
               pp.breakable
               value = _read_attribute(attr_name)
               value = inspection_filter.filter_param(attr_name, value) unless value.nil?
@@ -32,8 +32,8 @@ module RailsExtend::ActiveRecord
             end
           end
         else
-          pp.breakable " "
-          pp.text "not initialized"
+          pp.breakable ' '
+          pp.text 'not initialized'
         end
       end
     end
