@@ -9,3 +9,11 @@ class Numeric
   end
 
 end
+
+class BigDecimal
+
+  def inspect
+    to_formatted_s(:delimited)
+  end
+
+end
