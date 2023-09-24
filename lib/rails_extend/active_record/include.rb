@@ -10,6 +10,10 @@ module RailsExtend::ActiveRecord
       errors.full_messages.join("\n")
     end
 
+    def origin_attributes
+      instance_variable_get(:@attributes).instance_variable_get(:@attributes)
+    end
+
     def class_name
       self.class.base_class.name
     end
