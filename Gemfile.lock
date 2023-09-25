@@ -11,9 +11,8 @@ GIT
       httpx
       kaminari
       net-http
-      rails (>= 7.0)
+      rails
       rails_extend
-      turbo-rails
 
 PATH
   remote: .
@@ -223,10 +222,6 @@ GEM
     stringio (3.0.8)
     thor (1.2.2)
     timeout (0.4.0)
-    turbo-rails (1.4.0)
-      actionpack (>= 6.0.0)
-      activejob (>= 6.0.0)
-      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (0.12.2)
