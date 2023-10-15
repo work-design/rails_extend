@@ -7,6 +7,7 @@ module RailsExtend::ActionController
       # 支持在 views/:controller 目录下以 _base 开头的通用分组子目录
       pres = ["#{controller_path}/_#{params['action']}", "#{controller_path}/_base"]
       names = ["#{params[:business]}/#{params[:namespace]}"]
+      namespaces = [params[:namespace]]
 
       super_class = self.class.superclass
       # 同名 controller, 向上级追溯
@@ -14,6 +15,7 @@ module RailsExtend::ActionController
         pres.concat ["#{super_class.controller_path}/_#{params['action']}", "#{super_class.controller_path}/_base"]
         x = RailsExtend::Routes.controller_paths.dig(super_class.controller_path)
         names.append "#{x[:business]}/#{x[:namespace]}"
+        namespaces.append x[:namespace] unless namespaces.include?(x[:namespace])
         super_class = super_class.superclass
       end
       # 可以在 controller 中定义 _prefixes 方法
@@ -33,7 +35,12 @@ module RailsExtend::ActionController
             r = pres.find_index(&->(i){ i == "#{after}/base" })
             pres.insert(r, base_con) if r
           end
+        end
+      end
 
+      namespaces.compact_blank!
+      if namespaces.size >= 2
+        namespaces[0...-1].zip(namespaces[1..-1]).reverse_each do |before, after|
           if pres.exclude?(before)
             r = pres.find_index(&->(i){ i == after })
             pres.insert(r, before) if r
