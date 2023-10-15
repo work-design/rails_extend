@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/work-design/rails_com.git
-  revision: f5dc822d3633eb9645e3e02bde5e9c5b08089015
+  revision: 57a5046b42c79a25e86709e98bce1c3c01cc0d22
   specs:
     rails_com (1.3.0)
       acme-client
@@ -130,10 +130,10 @@ GEM
       faraday (~> 2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    http-2-next (1.0.0)
+    http-2-next (1.0.1)
     http-form_data (2.3.0)
-    httpx (1.0.1)
-      http-2-next (>= 1.0.0)
+    httpx (1.0.2)
+      http-2-next (>= 1.0.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -239,7 +239,7 @@ GEM
     stringio (3.0.9)
     thor (1.2.2)
     timeout (0.4.0)
-    turbo-rails (1.4.0)
+    turbo-rails (1.5.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)

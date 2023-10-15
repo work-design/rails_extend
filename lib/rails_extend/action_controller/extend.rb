@@ -12,6 +12,11 @@ module RailsExtend::ActionController
       view_paths.paths.map { |i| i.path }
     end
 
+    def super_controllers(root = ApplicationController)
+      r = ancestors.select(&->(i){ i.is_a?(Class) })
+      r[1..r.index(root)]
+    end
+
   end
 end
 

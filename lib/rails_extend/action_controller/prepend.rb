@@ -22,9 +22,16 @@ module RailsExtend::ActionController
       end
       pres += super
 
-      if params['namespace'] && pres.exclude?(params['namespace'])
-        r = pres.find_index(&->(i){ i.exclude?('/') })
-        pres.insert(r, params[:namespace]) if r
+      if params['namespace']
+        base_con = "#{params['business']}/#{params['namespace']}/base"
+        if params['business'] && pres.exclude?(base_con)
+          r = pres.find_index(&->(i){ i.exclude?('/') })
+        end
+
+        if pres.exclude?(params['namespace'])
+          r = pres.find_index(&->(i){ i.exclude?('/') })
+          pres.insert(r, params[:namespace]) if r
+        end
       end
 
       if defined?(current_organ) && current_organ&.code.present?
