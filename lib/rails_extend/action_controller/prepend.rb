@@ -32,7 +32,7 @@ module RailsExtend::ActionController
         names[0...-1].zip(names[1..-1]).reverse_each do |before, after|
           base_con = "#{before}/base"
           if pres.exclude?(base_con)
-            r = pres.find_index(&->(i){ i == "#{after}/base" })
+            r = pres.index("#{after}/base")
             pres.insert(r, base_con) if r
           end
         end
@@ -42,7 +42,7 @@ module RailsExtend::ActionController
       if namespaces.size >= 2
         namespaces[0...-1].zip(namespaces[1..-1]).reverse_each do |before, after|
           if pres.exclude?(before)
-            r = pres.find_index(&->(i){ i == after })
+            r = pres.index(after)
             pres.insert(r, before) if r
           end
         end
