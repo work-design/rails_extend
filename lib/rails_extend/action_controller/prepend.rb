@@ -14,8 +14,9 @@ module RailsExtend::ActionController
       while RailsExtend::Routes.find_actions(super_class.controller_path).include?(params['action'])
         pres.concat ["#{super_class.controller_path}/_#{params['action']}", "#{super_class.controller_path}/_base"]
         x = RailsExtend::Routes.controller_paths.dig(super_class.controller_path)
-        names.append "#{x[:business]}/#{x[:namespace]}"
-        namespaces.append x[:namespace] unless namespaces.include?(x[:namespace])
+        _namespace = x[:namespace].presence || 'application'
+        names.append "#{x[:business]}/#{_namespace}"
+        namespaces.append _namespace unless namespaces.include?(_namespace)
         super_class = super_class.superclass
       end
       # 可以在 controller 中定义 _prefixes 方法
