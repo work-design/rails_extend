@@ -68,8 +68,6 @@ module RailsExtend::ActiveRecord
 
         if r[:original_type].respond_to?(:type)
           r.merge! raw_type: r[:original_type].type
-        else
-          r.merge! raw_type: r[:original_type] # 兼容 rails 7 以下
         end
 
         case r[:original_type].class.name
@@ -83,10 +81,8 @@ module RailsExtend::ActiveRecord
           r.merge! r[:original_type].options
         end
 
-        if Rails::VERSION::MAJOR >= 7 && !column[1].instance_of?(Object) # Rails 7, column[1] 为默认值
+        unless column[1].instance_of?(Object) # Rails 7, column[1] 为默认值
           r.merge! default: column[1]
-        elsif Rails::VERSION::MAJOR < 7 # rails 7 以下, column[1] 为 options
-          r.merge! column[1]
         end
 
         cols.merge! name => r
