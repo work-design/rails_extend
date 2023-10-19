@@ -63,7 +63,11 @@ module RailsExtend::ActiveRecord
         r.merge! original_type: column[0]
 
         if r[:original_type].respond_to? :call
-          r.merge! original_type: r[:original_type].call(ActiveModel::Type::String.new)
+          begin
+            r.merge! original_type: r[:original_type].call(ActiveModel::Type::String.new)
+          rescue => e
+            r.merge! original_type: ActiveModel::Type::String.new
+          end
         end
 
         if r[:original_type].respond_to?(:type)
