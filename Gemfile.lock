@@ -1,12 +1,13 @@
 GIT
   remote: https://github.com/work-design/rails_com.git
-  revision: 3d2bc40c6cbe34538da7618ceca3de0b01589359
+  revision: 6c675f065a43b8b0990367b05b9180133ca5fb5e
   specs:
     rails_com (1.3.0)
       acme-client
       acts_as_list (>= 1.0)
       closure_tree (>= 7.3)
       default_where (~> 2.2)
+      good_job
       http-form_data (~> 2.3)
       httpx
       kaminari
@@ -121,6 +122,8 @@ GEM
     drb (2.1.1)
       ruby2_keywords
     erubi (1.12.0)
+    et-orbi (1.2.7)
+      tzinfo
     faraday (2.7.11)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -128,8 +131,18 @@ GEM
     faraday-net_http (3.0.2)
     faraday-retry (2.2.0)
       faraday (~> 2.0)
+    fugit (1.8.1)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    good_job (3.19.4)
+      activejob (>= 6.0.0)
+      activerecord (>= 6.0.0)
+      concurrent-ruby (>= 1.0.2)
+      fugit (>= 1.1)
+      railties (>= 6.0.0)
+      thor (>= 0.14.1)
     http-2-next (1.0.1)
     http-form_data (2.3.0)
     httpx (1.0.2)
@@ -190,6 +203,7 @@ GEM
       stringio
     puma (6.4.0)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.7.1)
     rack (3.0.8)
     rack-session (2.0.0)

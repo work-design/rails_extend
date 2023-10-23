@@ -25,7 +25,7 @@ module RailsExtend::ActiveRecord
           attr_names = self.class.attribute_names.select { |name| _has_attribute?(name) }
           max_indent = attr_names.map(&:length).max
           pp.seplist(attr_names, proc { pp.text ',' }) do |attr_name|
-            pp.breakable ' '
+            pp.breakable "\n"
             pp.group(1) do
               pp.text attr_name.rjust(max_indent)
               pp.text ':'

@@ -2,7 +2,7 @@
 
 # Ruby core extension
 require 'rails_extend/core/hash'
-require 'rails_extend/core/nil'
+require 'rails_extend/core/nil_class'
 require 'rails_extend/core/array'
 require 'rails_extend/core/date'
 require 'rails_extend/core/date_time'
