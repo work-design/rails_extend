@@ -8,7 +8,7 @@ class RailsExtend::MigrationsGenerator < Rails::Generators::Base
   attr_reader :tables
 
   def create_migration_file
-    file_name = "extend_migration_#{file_index}"
+    file_name = "smart_migration_#{file_index}"
 
     RailsExtend::Models.db_tables_hash.each do |mig_paths, tables|
       next if tables.blank?
