@@ -20,10 +20,10 @@ class RailsExtend::MigrationsGenerator < Rails::Generators::Base
 
   def file_index
     ups = ActiveRecord::Base.connection.migration_context.migrations_status.select do |status, version, name|
-      status == 'up' && name.start_with?('Extend migration ')
+      status == 'up' && name.start_with?('Smart migration ')
     end
     if ups.present?
-      index = ups[-1][-1].delete_prefix 'Extend migration '
+      index = ups[-1][-1].delete_prefix 'Smart migration '
       index.to_i + 1
     else
       1
