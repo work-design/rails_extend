@@ -31,8 +31,8 @@ module RailsExtend::Routes
   def controllers(cached = true)
     return @controllers if cached && defined? @controllers
 
-    @controllers = routes_wrapper(cached).group_by(&->(i){ i[:controller] }).transform_values! do |controllers|
-      controllers.each_with_object({}) { |i, h| h.merge! i[:action] => i }
+    @controllers = routes_wrapper(cached).group_by(&->(i){ i[:controller] }).transform_values! do |value|
+      value.each_with_object({}) { |i, h| h.merge! i[:action] => i }
     end
   end
 
