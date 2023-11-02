@@ -9,17 +9,17 @@ class RailsExtend::RemoveTableGenerator < Rails::Generators::Base
 
   def create_migration_file
     @tables = RailsExtend::Models.unbound_tables
-    file_name = "extend_remove_table_#{file_index}"
+    file_name = "smart_remove_table_#{file_index}"
 
     migration_template 'remove_table.rb', File.join(db_migrate_path, "#{file_name}.rb")
   end
 
   def file_index
     ups = ActiveRecord::Base.connection.migration_context.migrations_status.select do |status, version, name|
-      status == 'up' && name.start_with?('Extend remove table ')
+      status == 'up' && name.start_with?('Smart remove table ')
     end
     if ups.present?
-      index = ups[-1][-1].delete_prefix 'Extend remove table '
+      index = ups[-1][-1].delete_prefix 'Smart remove table '
       index.to_i + 1
     else
       1
