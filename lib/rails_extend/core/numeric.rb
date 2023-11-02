@@ -16,4 +16,8 @@ class BigDecimal
     to_formatted_s(:delimited)
   end
 
+  def to_human
+    to_fs(:rounded, precision: scale)
+  end
+
 end
