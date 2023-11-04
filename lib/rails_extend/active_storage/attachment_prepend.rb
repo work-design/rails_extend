@@ -11,5 +11,5 @@ module RailsExtend::ActiveStorage
 end
 
 ActiveSupport.on_load(:active_storage_attachment) do
-  prepend RailsExtned::ActiveStroage::AttachmentPrepend
+  prepend RailsExtend::ActiveStroage::AttachmentPrepend
 end
