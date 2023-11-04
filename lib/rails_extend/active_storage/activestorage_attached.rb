@@ -22,7 +22,7 @@ module ActiveStorage
 
     class One
 
-      def variantx(transformations)
+      def variant(transformations)
         if attachment&.variable?
           attachment.variant(transformations)
         else
