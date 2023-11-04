@@ -28,10 +28,6 @@ module RailsExtend::ActiveStorage
       "#{rh[:minute]}:#{rh[:second].to_s.rjust(2, '0')}"
     end
 
-    def identify_later
-      ActiveStorage::IdentifyJob.perform_later(self)
-    end
-
   end
 end
 
