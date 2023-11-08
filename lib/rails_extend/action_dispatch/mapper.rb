@@ -7,6 +7,7 @@ module RailsExtend::ActionDispatch
       end
       member do
         post :actions
+        post :edit
       end
       super
     end
