@@ -1,5 +1,10 @@
 module RailsExtend::ActionController
   module Include
+    extend ActiveSupport::Concern
+
+    included do
+      helper_method :referer_controller
+    end
 
     def whether_filter(filter)
       callback = self.__callbacks[:process_action].find { |i| i.filter == filter.to_sym }
@@ -18,9 +23,15 @@ module RailsExtend::ActionController
 
     def valid_ivars
       _except = _protected_ivars.to_a + [
-        :@marked_for_same_origin_verification
+        :@marked_for_same_origin_verification,
+        :@_referer_controller
       ]
       self.instance_variables - _except
+    end
+
+    def referer_controller
+      return @_referer_controller if defined? @_referer_controller
+      @_referer_controller = Rails.application.routes.recognize_path(request.referer)[:controller]
     end
 
   end
