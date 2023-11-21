@@ -174,7 +174,7 @@ module RailsExtend::ActiveRecord
     def attributes_by_belongs
       results = {}
 
-      reflections.values.select(&->(reflection){ reflection.belongs_to? }).each do |reflection|
+      reflections_with_belongs_to.each do |reflection|
         results.merge! reflection.foreign_key.to_sym => {
           input_type: :integer  # todo 考虑 foreign_key 不是自增 ID 的场景
         }
@@ -187,7 +187,7 @@ module RailsExtend::ActiveRecord
 
     def references_by_model
       results = {}
-      refs = reflections.values.select(&->(reflection){ reflection.belongs_to? })
+      refs = reflections_with_belongs_to
       refs.reject! { |reflection| reflection.foreign_key.to_s != "#{reflection.name}_id" }
       refs.reject! { |reflection| attributes_to_define_after_schema_loads.key?(reflection.foreign_key) }
       refs.each do |ref|
@@ -205,6 +205,14 @@ module RailsExtend::ActiveRecord
       indexes.map! do |index|
         index.merge! index_options: index.slice(:unique, :name).inject('') { |s, h| s << ", #{h[0]}: #{h[1].inspect}" }
       end
+    end
+
+    def reflections_with_belongs_to
+      reflections.values.select(&->(reflection){ reflection.belongs_to? })
+    end
+
+    def reflections_with_collection
+      reflections.values.select(&->(reflection){ reflection.collection? })
     end
 
   end
