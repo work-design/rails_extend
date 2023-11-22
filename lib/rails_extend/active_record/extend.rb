@@ -215,6 +215,10 @@ module RailsExtend::ActiveRecord
       reflections.values.select(&->(reflection){ reflection.collection? })
     end
 
+    def reflections_with_primary_keys
+      reflections_with_collection.map(&:active_record_primary_key).flatten.uniq
+    end
+
   end
 end
 
