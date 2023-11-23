@@ -175,6 +175,7 @@ module RailsExtend::ActiveRecord
       results = {}
 
       reflections_with_belongs_to.each do |reflection|
+        next if foreign_key.is_a? Array
         results.merge! reflection.foreign_key.to_sym => {
           input_type: :integer  # todo 考虑 foreign_key 不是自增 ID 的场景
         }
