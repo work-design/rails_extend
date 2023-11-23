@@ -19,7 +19,7 @@ module RailsExtend::Routes
   def actions(cached = true)
     return @actions if cached && defined? @actions
 
-    @actions = routes_wrapper(cached).group_by(&->(i){ i[:business] }).transform_values! do |businesses|
+    @actions = businesses(cached).transform_values do |businesses|
       businesses.group_by(&->(i){ i[:namespace] }).transform_values! do |namespaces|
         namespaces.group_by(&->(i){ i[:controller] }).transform_values! do |controllers|
           controllers.each_with_object({}) { |i, h| h.merge! i[:action] => i }
@@ -31,7 +31,7 @@ module RailsExtend::Routes
   def controllers(cached = true)
     return @controllers if cached && defined? @controllers
 
-    @controllers = routes_wrapper(cached).group_by(&->(i){ i[:controller] }).transform_values! do |value|
+    @controllers = _controllers(cached).transform_values do |value|
       value.each_with_object({}) { |i, h| h.merge! i[:action] => i }
     end
   end
@@ -39,20 +39,23 @@ module RailsExtend::Routes
   def controller_paths(cached = true)
     return @controller_paths if cached && defined? @controller_paths
 
-    @controller_paths = routes_wrapper(cached).group_by(&->(i){ i[:controller] }).transform_values! do |controllers|
+    @controller_paths = _controllers(cached).transform_values do |controllers|
       controllers[0].slice(:business, :namespace)
     end
   end
 
+  def _controllers(cached = true)
+    return @_controllers if cached && defined? @_controllers
+    @_controllers = routes_wrapper(cached).group_by(&->(i){ i[:controller] })
+  end
+
   def businesses(cached = true)
     return @businesses if cached && defined? @businesses
-
     @businesses = routes_wrapper(cached).group_by(&->(i){ i[:business] })
   end
 
   def namespaces(cached = true)
     return @namespaces if cached && defined? @namespaces
-
     @namespaces = routes_wrapper(cached).group_by(&->(i){ i[:namespace] })
   end
 
