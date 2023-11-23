@@ -3,9 +3,12 @@ module RailsExtend::ActionDispatch
   module Generator
 
     def use_relative_controller!
+      _controller = @options[:controller]
+
       super
 
-      RailsExtend::Routes@options[:controller]
+      return if RailsExtend::Routes._controllers.key?(@options[:controller])
+      @options[:controller] = _controller
     end
 
   end

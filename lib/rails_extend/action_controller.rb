@@ -7,3 +7,4 @@ require 'rails_extend/action_controller/prepend'
 require 'rails_extend/action_controller/parameters'
 
 require 'rails_extend/action_dispatch/mapper'
+require 'rails_extend/action_dispatch/generator'
