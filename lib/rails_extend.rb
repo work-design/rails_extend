@@ -16,6 +16,7 @@ require 'rails_extend/generators'
 # Meta for Rails
 require 'rails_extend/routes'
 require 'rails_extend/models'
+require 'rails_extend/exports'
 require 'rails_extend/env'
 
 require 'rails_extend/quiet_logs'
