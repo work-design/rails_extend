@@ -38,6 +38,10 @@ module RailsExtend::ActionController
       referer_meta[:controller]
     end
 
+    def proper_layout
+      _prefixes.find { |i| lookup_context.exists?(i, ['layouts'], formats: formats) }
+    end
+
   end
 end
 
