@@ -45,6 +45,6 @@ module RailsExtend::ActionController
   end
 end
 
-ActiveSupport.on_load :action_controller do
+ActiveSupport.on_load :action_controller_base do
   include RailsExtend::ActionController::Include
 end
