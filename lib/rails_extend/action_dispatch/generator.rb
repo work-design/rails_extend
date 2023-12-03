@@ -10,6 +10,11 @@ module RailsExtend::ActionDispatch
         return @options[:controller] = path if RailsExtend::Routes._controllers.key?(path)
       end
 
+      if !named_route && different_controller? && !controller.start_with?('/') && current_controller.count('/') >= 3
+        path = (current_controller.split('/')[0..-3] << controller).join('/')
+        return @options[:controller] = path if RailsExtend::Routes._controllers.key?(path)
+      end
+
       super
 
       return if RailsExtend::Routes._controllers.key?(@options[:controller])
