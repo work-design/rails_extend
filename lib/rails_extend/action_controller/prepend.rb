@@ -26,7 +26,9 @@ module RailsExtend::ActionController
       end
       pres += super
 
-      names.map(&->(i){ i.sub(/#{controller_name}$/, 'base') })
+      r = names.map(&->(i){ i.sub(/#{controller_name}$/, 'base') })
+      r_index = pres.index(r[-1])
+      pres.insert(r_index, *r[0..-2]) if r_index
 
       if defined?(current_organ) && current_organ&.code.present?
         RailsExtend.config.override_prefixes.each do |pre|
