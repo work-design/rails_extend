@@ -36,7 +36,7 @@ module RailsExtend::ActionController
 
       # layout
       layout_index = pres.index(&->(i){ i.exclude?('/') })
-      pres.insert(layout_index, self.class._layout) if layout_index
+      pres.insert(layout_index, self.class._layout) if layout_index && self.class._layout.is_a?(String)
 
       if defined?(current_organ) && current_organ&.code.present?
         RailsExtend.config.override_prefixes.each do |pre|
