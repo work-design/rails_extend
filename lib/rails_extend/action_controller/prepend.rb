@@ -26,7 +26,11 @@ module RailsExtend::ActionController
       end
       pres += super
 
-      r = names.map(&->(i){ i.sub(/#{controller_name}$/, 'base') })
+      r = names.map do |i|
+        olds = i.split('/')
+        olds[-1] = 'base'
+        olds.join('/')
+      end
       r_index = pres.index(r[-1])
       pres.insert(r_index, *r[0..-2]) if r_index
 
