@@ -6,21 +6,17 @@ module RailsExtend::ActionController
       # 支持在 views/:controller 目录下以 _:action 开头的子目录进一步分组，会优先查找该目录下文件
       # 支持在 views/:controller 目录下以 _base 开头的通用分组子目录
       pres = ["#{controller_path}/_#{params['action']}"]
-      names = ["#{params[:business]}/#{params[:namespace]}"]
-      namespaces = [params[:namespace]]
+      names = ["#{controller_path}"]
 
       super_class = self.class.superclass
       # 同名 controller, 向上级追溯
       while RailsExtend::Routes.find_actions(super_class.controller_path).include?(params['action'])
-        pres << "#{super_class.controller_path}/_#{params['action']}"
-        x = RailsExtend::Routes.controller_paths.dig(super_class.controller_path)
-        _namespace = x[:namespace].presence || 'application'
-        names.append "#{x[:business]}/#{_namespace}"
-        namespaces.append _namespace unless namespaces.include?(_namespace)
+        pres.append "#{super_class.controller_path}/_#{params['action']}"
+        names.append "#{super_class.controller_path}"
         super_class = super_class.superclass
       end
 
-      pres.concat pres.map(&->(i){ i.sub(/_#{params[:action]}$/, '_base') })
+      pres.concat names.map(&->(i){ "#{i}/_base" })
       # 可以在 controller 中定义 _prefixes 方法
       # super do |pres|
       #   pres + ['xx']
@@ -30,26 +26,7 @@ module RailsExtend::ActionController
       end
       pres += super
 
-      names.compact_blank!
-      if names.size >= 2
-        names[0...-1].zip(names[1..-1]).reverse_each do |before, after|
-          base_con = "#{before}/base"
-          if pres.exclude?(base_con)
-            r = pres.index("#{after}/base")
-            pres.insert(r, base_con) if r
-          end
-        end
-      end
-
-      namespaces.compact_blank!
-      if namespaces.size >= 2
-        namespaces[0...-1].zip(namespaces[1..-1]).reverse_each do |before, after|
-          if pres.exclude?(before)
-            r = pres.index(after)
-            pres.insert(r, before) if r
-          end
-        end
-      end
+      names.map(&->(i){ i.sub(/#{controller_name}$/, 'base') })
 
       if defined?(current_organ) && current_organ&.code.present?
         RailsExtend.config.override_prefixes.each do |pre|
