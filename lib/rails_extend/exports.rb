@@ -8,4 +8,11 @@ module RailsExtend::Exports
     Zeitwerk::Loader.eager_load_all
     @exports = ApplicationExport.descendants
   end
+
+  def imports
+    return @imports if defined? @imports
+    Zeitwerk::Loader.eager_load_all
+    @imports = ApplicationImport.descendants
+  end
+
 end
