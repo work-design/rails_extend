@@ -8,6 +8,10 @@ class Numeric
     (self * 2).floor / 2.0
   end
 
+  def indent
+    to_s.split('.')[0]
+  end
+
 end
 
 class BigDecimal
